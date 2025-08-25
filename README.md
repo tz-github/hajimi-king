@@ -95,7 +95,18 @@ Ctrl + C
 
 ## 🐳 Docker部署 🌊
 
-### 方式一：使用环境变量
+### 方式一：
+```bash
+docker run -d \
+  --name hajimi-king \
+  -p 3000:3000 \          # 假设应用内部端口为3000，请根据实际情况修改
+  --env-file .env \       # 加载环境变量文件
+  -v $(pwd)/data:/app/data \  # 挂载数据卷
+  --restart unless-stopped \
+  ghcr.io/gakkinoone/hajimi-king:latest
+```
+
+### 方式二：使用环境变量
 
 ```yaml
 version: '3.8'
@@ -115,7 +126,7 @@ services:
     working_dir: /app
 ```
 
-### 方式二：使用.env文件
+### 方式三：使用.env文件
 
 ```yaml
 version: '3.8'
@@ -130,6 +141,7 @@ services:
       - ./data:/app/data
     working_dir: /app
 ```
+
 
 创建 `.env` 文件（参考 `env.example`）：
 ```bash
